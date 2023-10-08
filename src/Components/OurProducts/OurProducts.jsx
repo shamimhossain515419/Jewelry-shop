@@ -5,7 +5,7 @@ import CommonCart from "../CommonCart/CommonCart";
 const OurProducts = async () => {
 
      const newData = await getAllAdminProducts();
-     console.log(newData);
+    
      return (
           <div>
                <CommonTitle title={"Our Products"} pra={"Add our products to weekly lineup"} ></CommonTitle>

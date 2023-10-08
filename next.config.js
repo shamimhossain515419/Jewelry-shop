@@ -12,7 +12,11 @@ module.exports = {
                },
                {
                     protocol: "https",
-                    hostname: "images.unsplash.com",
+                    hostname: "lh3.googleusercontent.com",
+               },
+               {
+                    protocol: "https",
+                    hostname: "tecdn.b-cdn.net",
                }
                
           ],

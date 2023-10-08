@@ -11,6 +11,7 @@ const ProductSchema = new mongoose.Schema(
     brands: String,
     feedback: Array,
     image: String,
+    email: String,
   },
   { timestamps: true }
 );

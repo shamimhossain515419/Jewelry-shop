@@ -12,24 +12,25 @@ const schema = Joi.object({
      email: Joi.string().email().required(),
      password: Joi.string().min(6).required(),
      role: Joi.string().required(),
+     photo: Joi.string().required(),
 });
 
 export const dynamic = "force-dynamic";
 
 export async function POST(req) {
      await connectToDB();
-     const { name, email, password, role } = await req.json();
+     const { name, email, password,photo, role } = await req.json();
      //validate the schema
     
-     const { error } = schema.validate({ name, email, password, role });
+     // const { error } = schema.validate({ name, email, password, role,photo });
 
-     if (error) {
-          console.log(error);
-          return NextResponse.json({
-               success: false,
-               message: error.details[0].message,
-          });
-     }
+     // if (error) {
+     //      console.log(error);
+     //      return NextResponse.json({
+     //           success: false,
+     //           message: error.details[0].message,
+     //      });
+     // }
 
      try {
           // check if the user is exists or not
@@ -43,10 +44,7 @@ export async function POST(req) {
           } else {
 
                const newlyCreatedUser = await User.create({
-                    name,
-                    email,
-                    password,
-                    role,
+                    name, email, password,photo, role 
                });
 
                if (newlyCreatedUser) {

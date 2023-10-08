@@ -3,19 +3,25 @@ import Container from "@/Components/Container/Container";
 import Menubar from "./Menubar";
 import { AiOutlineLogout, AiOutlineClose } from 'react-icons/ai'
 import { FaBars } from "react-icons/fa"
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-
- import  Logo  from '../../../public/Black Gold White Luxury Royal Crown Logo (1).png'
+import { toast } from 'react-toastify';
+import Logo from '../../../public/Black Gold White Luxury Royal Crown Logo (1).png'
+import { GlobalContext } from "@/Contaxt";
+import Notification from "@/Components/Notifications/Notifiacations";
 const Navbar = () => {
-     const user = null;
+     const { user, LogOut } = useContext(GlobalContext)
      const [Open, setOpen] = useState(false)
      const [openModal, setOpenModal] = useState(false);
 
 
-     const heandleLogout = () => {
-          console.log('shad');
+     const heandleLogout = async () => {
+          const data = await LogOut();
+
+          if (data) {
+               toast.success('Successfully Register!')
+          }
      }
      return (
           <div>
@@ -25,23 +31,23 @@ const Navbar = () => {
                               <div className=' flex justify-between items-center'>
                                    <div className=' flex  items-center gap-4'>
                                         <Image src={Logo} className=' h-12 w-12 hidden md:block ' alt="" />
-                                        <Link href={'/dashboard'}>  <Image className=" h-12 w-12 md:hidden rounded-full object-cover" src={user?.photoURL} alt="" /></Link>
+                                        <Link href={'/'}>  <Image width={60} height={60} className=" h-12 w-12 md:hidden rounded-full object-cover" src={user?.photoURL} alt="image" /></Link>
                                         <Link href="/"> <h1 className='  py-2 font-semibold  text-base md:text-2xl text-color   uppercase'> Jewelry Shop </h1></Link>
                                    </div>
                                    <div className=' hidden md:flex items-center gap-3  space-x-5'>
 
 
                                         <Link href={'/'}> Home</Link>
-                                        <Link href={'/alljewelry'}> All jewelry</Link>
+                                        <Link href={'/all-product'}> All jewelry</Link>
                                         <Link href={'/myjewelry'}>My Jewelry</Link>
                                         <Link href={'/addjewelry'}> Add jewelry</Link>
                                         <Link href={'/blogs'}> Blogs</Link>
                                         <Link href={'/contact'}> Contact Us</Link>
                                         <div>
                                              {
-                                                  user ? <div className=' cursor-pointer hidden md:block '>
+                                                  user ? <div onClick={() => setOpenModal(true)} className=' cursor-pointer hidden md:block '>
                                                        <div className='   relative flex gap-2 items-center '>
-                                                            <Image className=' relative h-10 w-10 rounded-full object-cover' src={user?.photoURL} alt="" />
+                                                            <Image width={60} height={60} className=' relative h-10 w-10 rounded-full object-cover' src={user?.photoURL} alt="" />
                                                             <div className=' absolute w-3 h-3  left-8 -top-1  bg-[rgb(1,179,31)] rounded-full '></div>
                                                             <div className=' relative  space-y-0'>
                                                                  <h1 className='relative  text-base'>{user?.displayName}</h1>
@@ -89,6 +95,7 @@ const Navbar = () => {
                     </Container>
 
                </nav>
+               <Notification></Notification>
           </div>
      );
 };

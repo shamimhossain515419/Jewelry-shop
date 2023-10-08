@@ -2,6 +2,7 @@
 import Navbar from '@/Share/Navbar/Navbar'
 import './globals.css'
 import { Inter } from 'next/font/google'
+import GlobalState from '@/Contaxt'
 const inter = Inter({ subsets: ['latin'] })
 export const metadata = {
   title: 'Jewelry shop',
@@ -11,13 +12,16 @@ export const metadata = {
 export default function RootLayout({ children }) {
 
 
-return (
+  return (
     <html lang="en">
       <body className={inter.className}>
-        <Navbar></Navbar>
-        <div className=' mt-[75px]'>
-          {children}
-        </div>
+        <GlobalState>
+          <Navbar></Navbar>
+          <div className=' pt-[75px]'>
+            {children}
+          </div>
+        </GlobalState>
+
       </body>
     </html>
   )

@@ -3,28 +3,38 @@
 import Image from 'next/image';
 import React from 'react';
 
-
+import { TfiReload } from 'react-icons/tfi'
+import { FiSearch } from 'react-icons/fi'
+import { AiOutlineHeart } from 'react-icons/ai';
+import {useRouter } from 'next/navigation';
 const CommonCart = ({ data }) => {
+     const router = useRouter()
 
-     console.log(data);
      return (
           <div>
                <div>
                     <div className=' max-w-[2400] 2xl:px-[280px] md:mx-20 xl:px-24 md:px-16 px-3'>
                          {data?.length > 1 ? <div className=' grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 '>
-                              {data?.map(item => <div key={item?._id}>
+                              {data?.map(item => <div onClick={() =>router.push(`/all-product/${item?._id}`)} key={item?._id}>
+                                   <div className='CartBox cu'>
+                                        <div className='image-container'>
+                                             <Image className='object-fill rounded-lg' width='400' height='200' src={item?.image} alt='image' />
+                                             <div className='overlay flex  flex-col  justify-between '>
 
-                                   <div class='CartBox'>
-                                        <div class='image-container'>
-                                             <Image class='object-fill rounded-lg' width='400' height='200' src={item?.image} alt='' />
-                                             <div class='overlay'>
+                                                  <div className='  mr-2   space-y-2 gap-3'>
+                                                       <div className=' bg-white  shadow-lg hover:text-white rounded-full hover:bg-[#c29958]  duration-200  cursor-pointer  inline-block  p-2' >
+                                                            <AiOutlineHeart size={28}></AiOutlineHeart>
+                                                       </div>
+                                                       <div className=' bg-white hover:text-white rounded-full  hover:bg-[#c29958]  duration-200 cursor-pointer w-[44px]  p-2' >
+                                                            <FiSearch size={28}></FiSearch>
+                                                       </div>
+                                                       <div className=' bg-white hover:text-white rounded-full hover:bg-[#c29958]  duration-200  cursor-pointer inline-block  p-2' >
+                                                            <TfiReload size={24}></TfiReload>
+                                                       </div>
 
-                                                  <div  className='   text-base font-light'>
-                                                       <p>Love</p>
-                                                       <p>share</p>
-                                                       <p>wind</p>
+
                                                   </div>
-                                                  <button class='bgColor text-white px-4 py-2 rounded-lg capitalize'>Add button</button>
+                                                  <button className=' bg-white  hover:bg-[#c29958]  duration-200  block bottom-0 hover:text-white px-4 py-2 rounded-lg capitalize'>Add to Cart</button>
                                              </div>
                                         </div>
                                    </div>

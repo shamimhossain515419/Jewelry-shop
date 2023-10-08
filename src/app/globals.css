@@ -32,39 +32,40 @@ body {
     height: 200px;
     object-fit: fill;
     border-radius: 8px;
-    transition: transform 0.3s ease; /* Add a transition for the hover effect */
+    transition: transform 0.3s ease;
+    /* Add a transition for the hover effect */
 }
 
 /* Styles for the overlay and button */
 .overlay {
     position: absolute;
-    top: 0;
+  
+ top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: transparent; /* Add a semi-transparent overlay */
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
+    background-color: transparent;
+    /* Add a semi-transparent overlay */
     opacity: 0;
-    transition: opacity 0.3s ease; /* Add a transition for the hover effect */
+    padding: 10px;
+    transition: opacity 0.5s ease;
+    /* Add a transition for the hover effect */
 }
 
 .overlay button {
-    background-color: #c29958;
-    color: white;
-    padding: 10px 20px;
+   padding: 10px 20px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
 }
 
 /* Hover effect */
-.CartBox:hover .image-container  Image {
-    transform: scale(1.1); /* Scale the image when CartBox is hovered */
+.CartBox:hover .image-container Image {
+    transform: scale(1.1);
+    /* Scale the image when CartBox is hovered */
 }
 
 .CartBox:hover .overlay {
-    opacity: 1; /* Show the overlay on hover */
+    opacity: 1;
+    /* Show the overlay on hover */
 }
