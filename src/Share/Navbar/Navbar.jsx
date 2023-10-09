@@ -6,14 +6,13 @@ import { FaBars } from "react-icons/fa"
 import { useContext, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { toast } from 'react-toastify';
 import Logo from '../../../public/Black Gold White Luxury Royal Crown Logo (1).png'
 import { GlobalContext } from "@/Contaxt";
 import Notification from "@/Components/Notifications/Notifiacations";
 import SidBarCar from "@/Components/SidbarCart/idnex";
 const Navbar = () => {
      const { user, LogOut, userinfo, cartData, openModal, setOpenModal } = useContext(GlobalContext)
-     const [Open, setOpen] = useState(false)
+     const [Open, setOpen] = useState(true)
 
      const [isAdmin, setIsAdmin] = useState(false);
 
