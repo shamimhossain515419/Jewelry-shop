@@ -20,18 +20,6 @@ export const dynamic = "force-dynamic";
 export async function POST(req) {
      await connectToDB();
      const { name, email, password,photo, role } = await req.json();
-     //validate the schema
-    
-     // const { error } = schema.validate({ name, email, password, role,photo });
-
-     // if (error) {
-     //      console.log(error);
-     //      return NextResponse.json({
-     //           success: false,
-     //           message: error.details[0].message,
-     //      });
-     // }
-
      try {
           // check if the user is exists or not
           const isUserAlreadyExists = await User.findOne({ email });

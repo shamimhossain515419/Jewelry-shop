@@ -16,11 +16,15 @@ import {
      updateProfile,
 } from 'firebase/auth'
 import { JwtToken } from '@/services/authorization';
+import { GetUser } from '@/services/Register';
+import { GetUserCart } from '@/services/product';
 const GlobalState = ({ children }) => {
-
+     const [openModal, setOpenModal] = useState(false);
      const [loading, setLoading] = useState(true)
      const [user, setUser] = useState(null);
      const [Error, setError] = useState(false)
+     const [cartData, setCartData] = useState([])
+     const [userinfo, setUserinfo] = useState(null)
      const [pageLoader, setPageLoader] = useState(false)
      const GoogleProvider = new GoogleAuthProvider();
      const createUser = async (email, password) => {
@@ -47,9 +51,20 @@ const GlobalState = ({ children }) => {
      }
 
      const handleToken = async (email) => {
-          const EmailData = { email: email}
+          const EmailData = { email: email }
           const data = await JwtToken(EmailData);
           localStorage.setItem("token", data?.message);
+     };
+     const getCartData = async (email) => {
+          const data = await  GetUserCart(email);
+          console.log(data);
+          setCartData(data?.data)
+     }
+
+     const handleCurrentUser = async (email) => {
+          const data = await GetUser(email);
+          setUserinfo(data.data)
+
      }
 
      useEffect(() => {
@@ -58,8 +73,9 @@ const GlobalState = ({ children }) => {
                setLoading(false);
                console.log(currentUser?.email);
                if (currentUser?.email) {
-                    handleToken(currentUser?.email)
-               
+                    handleToken(currentUser?.email);
+                    handleCurrentUser(currentUser?.email)
+                    getCartData(currentUser?.email)
                } else {
                     localStorage.removeItem('token')
                }
@@ -75,12 +91,15 @@ const GlobalState = ({ children }) => {
      }
 
      const stateInfo = {
+          openModal, setOpenModal,
           updateUserProfile,
           createUser, GoogleLogin,
           user, loading, LogOut,
           pageLoader, setPageLoader,
           Error, setError,
-          Login
+          Login, userinfo,
+          getCartData,
+          cartData
      }
      return (
           <div>

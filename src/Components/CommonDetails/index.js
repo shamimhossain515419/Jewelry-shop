@@ -1,13 +1,32 @@
 'use client'
 import Image from 'next/image';
-import React from 'react';
+import React, { useContext } from 'react';
 import Notification from '../Notifications/Notifiacations';
 import Container from '../Container/Container';
 import CommonCart from '../CommonCart/CommonCart';
 import CommonTitle from '../CommonTitle/CommonTitle';
-
+import { CartAddProduct } from '@/services/product';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation';
+import { GlobalContext } from '@/Contaxt';
 const CommonCertDetails = ({ item, data }) => {
-   
+     const { user,getCartData } = useContext(GlobalContext)
+     const router = useRouter();
+     const handleAddToCart = async (item) => {
+          const newData = {
+               email: user?.email, name: item?.name, productId: item?.productId, priceDrop: item?.priceDrop, price: item?.price, image: item?.image
+          }
+          const data = await CartAddProduct(newData)
+          if (data.success == true) {
+               console.log(data);
+               getCartData(user?.email)
+               toast.success("successfully cart add");
+               router.push('/')
+          } else {
+               toast.error(data.massage)
+          }
+     }
+
      return (
           <div>
                <Container>

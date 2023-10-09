@@ -1,7 +1,7 @@
 'use client'
 import Container from "@/Components/Container/Container";
 import Menubar from "./Menubar";
-import { AiOutlineLogout, AiOutlineClose } from 'react-icons/ai'
+import { AiOutlineLogout, AiOutlineClose, AiOutlineHeart, AiOutlineShoppingCart } from 'react-icons/ai'
 import { FaBars } from "react-icons/fa"
 import { useContext, useState } from "react";
 import Link from "next/link";
@@ -10,19 +10,13 @@ import { toast } from 'react-toastify';
 import Logo from '../../../public/Black Gold White Luxury Royal Crown Logo (1).png'
 import { GlobalContext } from "@/Contaxt";
 import Notification from "@/Components/Notifications/Notifiacations";
+import SidBarCar from "@/Components/SidbarCart/idnex";
 const Navbar = () => {
-     const { user, LogOut } = useContext(GlobalContext)
+     const { user, LogOut, userinfo, cartData, openModal, setOpenModal } = useContext(GlobalContext)
      const [Open, setOpen] = useState(false)
-     const [openModal, setOpenModal] = useState(false);
 
+     const [isAdmin, setIsAdmin] = useState(false);
 
-     const heandleLogout = async () => {
-          const data = await LogOut();
-
-          if (data) {
-               toast.success('Successfully Register!')
-          }
-     }
      return (
           <div>
                <nav className='px-2 w-full fixed py-3 z-50 bg-white      top-0  left-0 right-0    shadow-lg'>
@@ -35,14 +29,47 @@ const Navbar = () => {
                                         <Link href="/"> <h1 className='  py-2 font-semibold  text-base md:text-2xl text-color   uppercase'> Jewelry Shop </h1></Link>
                                    </div>
                                    <div className=' hidden md:flex items-center gap-3  space-x-5'>
+                                        {
+                                             userinfo?.role == "Admin" ? (isAdmin == true ? <>
+                                                  <Link href={'/'}> Home</Link>
+                                                  <Link href={'/all-product'}> All jewelry</Link>
+                                                  <Link href={'/myjewelry'}>My Jewelry</Link>
+                                                  <Link href={'/addjewelry'}> Add jewelry</Link>
+
+                                                  <Link href={'/blogs'}> Blogs</Link>
+                                                  <Link href={'/contact'}> Contact Us</Link>
+                                                  <button onClick={() => setIsAdmin(false)} className=" bgColor text-white  px-3 py-1 ">Client view</button>
+                                             </> : <>
+                                                  <Link href={'/'}> Home</Link>
+                                                  <Link href={'/all-product'}> All jewelry</Link>
+                                                  <Link href={'/blogs'}> Blogs</Link>
+                                                  <Link href={'/contact'}> Contact Us</Link>
+                                                  <div>
+                                                       <AiOutlineHeart size={24}></AiOutlineHeart>
+                                                  </div>
+                                                  <div className=" relative">
+                                                       <AiOutlineShoppingCart className=" relative" size={24}></AiOutlineShoppingCart>
+                                                  </div>
+                                                  <button onClick={() => setIsAdmin(true)} className=" bgColor text-white  px-3 py-1 ">admin view</button>
+
+                                             </>) : (<>
+
+                                                  <Link href={'/'}> Home</Link>
+                                                  <Link href={'/all-product'}> All jewelry</Link>
+                                                  <Link href={'/blogs'}> Blogs</Link>
+                                                  <Link href={'/contact'}> Contact Us</Link>
+                                                  <div>
+                                                       <AiOutlineHeart size={24}></AiOutlineHeart>
+                                                  </div>
+                                                  <Link href={'/'} className=" relative">
+                                                       <AiOutlineShoppingCart className=" relative" size={24}></AiOutlineShoppingCart>
+                                                       <div className=' absolute   text-center px-[2px]  text-sm text-white bg-red-600  left-7  -top-2    rounded-full '> {cartData?.length >= 1 ? cartData?.length : 0} </div>
+                                                  </Link>
+                                             </>)
 
 
-                                        <Link href={'/'}> Home</Link>
-                                        <Link href={'/all-product'}> All jewelry</Link>
-                                        <Link href={'/myjewelry'}>My Jewelry</Link>
-                                        <Link href={'/addjewelry'}> Add jewelry</Link>
-                                        <Link href={'/blogs'}> Blogs</Link>
-                                        <Link href={'/contact'}> Contact Us</Link>
+                                        }
+
                                         <div>
                                              {
                                                   user ? <div onClick={() => setOpenModal(true)} className=' cursor-pointer hidden md:block '>
@@ -61,14 +88,11 @@ const Navbar = () => {
 
                                    </div>
 
-                                   <div className={`bg-[#298742c2]  text-white   ${openModal ? "transform translate-x-0" : "transform translate-x-full"}  duration-300 sm:w-[250px]  h-screen p-4 rounded-lg shadow-lg   absolute top-0  right-1`}>
-                                        <div className=' flex flex-col gap-4 mt-4  '>
-                                             <Link onClick={() => setOpenModal(false)} href={'/dashboard'} className={"text-xl hover:text-black duration-150  font-medium"}> Dashboard</Link>
-                                             <Link onClick={() => setOpenModal(false)} href={'/dashboard/account'} className={"text-xl   hover:text-black duration-150   font-medium"}>profile</Link>
-                                             <div onClick={heandleLogout} className=' flex items-center gap-2  cursor-pointer  hover:text-black duration-150  text-xl  font-medium'>  <AiOutlineLogout size={20}></AiOutlineLogout>  <span>Logout</span>  </div>
-                                        </div>
-                                        <AiOutlineClose onClick={() => setOpenModal(false)} size={24} className={" cursor-pointer absolute top-2 right-1 "}></AiOutlineClose>
+                                   <div className={`bgColor  text-white   ${openModal ? "transform translate-x-0" : "transform translate-x-full"}  duration-300 sm:w-[350px]  h-screen p-4 rounded-lg shadow-lg   absolute top-0  right-1`}>
+                                        <SidBarCar openModal={openModal} setOpenModal={setOpenModal}></SidBarCar>
                                    </div>
+
+
 
 
 
@@ -96,7 +120,7 @@ const Navbar = () => {
 
                </nav>
                <Notification></Notification>
-          </div>
+          </div >
      );
 };
 
