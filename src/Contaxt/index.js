@@ -4,7 +4,6 @@ import React from 'react';
 import { createContext, useEffect, useState } from "react";
 export const GlobalContext = createContext(null);
 const auth = getAuth(app);
-import Cookies from 'js-cookie'
 import {
      signInWithEmailAndPassword,
      GoogleAuthProvider,
