@@ -37,19 +37,22 @@ const Navbar = () => {
 
                                                   <Link href={'/blogs'}> Blogs</Link>
                                                   <Link href={'/contact'}> Contact Us</Link>
-                                                  <button onClick={() => setIsAdmin(false)} className=" bgColor text-white  px-3 py-1 ">Client view</button>
+                                                  <button onClick={() => setIsAdmin(false)} className=" bgColor text-white  px-3 py-1 ">Admin view</button>
                                              </> : <>
                                                   <Link href={'/'}> Home</Link>
                                                   <Link href={'/all-product'}> All jewelry</Link>
                                                   <Link href={'/blogs'}> Blogs</Link>
                                                   <Link href={'/contact'}> Contact Us</Link>
+                                                  {
+                                                       user?.email ? <Link href={'/dashboard'}>Dashboard</Link> : null
+                                                  }
                                                   <div>
                                                        <AiOutlineHeart size={24}></AiOutlineHeart>
                                                   </div>
                                                   <div className=" relative">
                                                        <AiOutlineShoppingCart className=" relative" size={24}></AiOutlineShoppingCart>
                                                   </div>
-                                                  <button onClick={() => setIsAdmin(true)} className=" bgColor text-white  px-3 py-1 ">admin view</button>
+                                                  <button onClick={() => setIsAdmin(true)} className=" bgColor text-white  px-3 py-1 ">Client view</button>
 
                                              </>) : (<>
 
@@ -57,10 +60,13 @@ const Navbar = () => {
                                                   <Link href={'/all-product'}> All jewelry</Link>
                                                   <Link href={'/blogs'}> Blogs</Link>
                                                   <Link href={'/contact'}> Contact Us</Link>
+                                                  {
+                                                       user?.email ? <Link href={'/dashboard'}>Dashboard</Link> : null
+                                                  }
                                                   <div>
                                                        <AiOutlineHeart size={24}></AiOutlineHeart>
                                                   </div>
-                                                  <Link href={'/'} className=" relative">
+                                                  <Link href={'/dashboard/checkout'} className=" relative">
                                                        <AiOutlineShoppingCart className=" relative" size={24}></AiOutlineShoppingCart>
                                                        <div className=' absolute   text-center px-[2px]  text-sm text-white bg-red-600  left-7  -top-2    rounded-full '> {cartData?.length >= 1 ? cartData?.length : 0} </div>
                                                   </Link>
