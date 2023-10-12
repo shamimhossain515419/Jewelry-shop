@@ -8,9 +8,8 @@ import React, { useContext } from 'react';
 const DashboardProfile = () => {
      const { user } = useContext(GlobalContext)
      return (
-          <div className='  justify-center items-center  '>
+          <div className='  flex justify-center items-center  w-full  '>
                <div>
-                    <Image width={250} height={250} className=' rounded-full object-fill' src={user?.photoURL} alt=''></Image>
                     <h1 className=' text-3xl font-medium my-2 '>Name: {user?.displayName} </h1>
                     <h1 className=' text-xl font-medium my-2 '>Email: {user?.email} </h1>
                </div>

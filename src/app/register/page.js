@@ -21,10 +21,11 @@ const initialFormData = {
 
 
 const RegisterPage = () => {
-     const { pageLoader, setPageLoader, GoogleLogin, Error, updateUserProfile, setError, createUser } = useContext(GlobalContext)
+     const { pageLoader, setPageLoader, GoogleLogin, updateUserProfile, createUser } = useContext(GlobalContext)
      const router = useRouter()
      const [formData, setFormData] = useState(initialFormData);
      const [image, setImage] = useState(false);
+     const [Error, setError] = useState(false);
      console.log(formData);
 
      const handleimage = (event) => {
@@ -48,8 +49,8 @@ const RegisterPage = () => {
           })
      }
 
-
-
+     console.log(Error);
+     console.log(formData);
      const selectUser = { email: formData?.email, password: formData?.password, name: formData?.name, photo: formData?.photo, role: formData?.role }
 
      const handleGoogle = async () => {
@@ -68,23 +69,22 @@ const RegisterPage = () => {
           }
      }
 
+
      const handleSubmit = async (e) => {
           e.preventDefault();
-          if (formData?.password == formData?.confirmPassword) {
-               setError(false);
-
-
-               const result = await createUser(formData?.email, formData?.password);
-               const profile = await updateUserProfile(formData?.name, formData?.photo)
-               const postData = await registerNewUser(selectUser);
-               if (result.user) {
-                    router.push('/')
-                    toast.success('Successfully Register!')
-               }
-          } else {
-               setError(true)
+          const postData = await registerNewUser(selectUser);
+          if (formData?.password !== formData?.confirmPassword) {
+               setError(true);
+               return;
           }
 
+          const result = await createUser(formData?.email, formData?.password);
+          const profile = await updateUserProfile(formData?.name, formData?.photo)
+
+          if (result.user) {
+               router.push('/')
+               toast.success('Successfully Register!')
+          }
 
      }
 
@@ -107,7 +107,7 @@ const RegisterPage = () => {
 
                                    {/* <!-- Right column container with form --> */}
                                    <div className="md:w-8/12 lg:ml-6 lg:w-5/12">
-                                        <form onSubmit={handleSubmit}  className=' space-y-2'>
+                                        <form onSubmit={handleSubmit} className=' space-y-2'>
                                              {/* <!-- Email input --> */}
                                              <input
                                                   onChange={(e) => setFormData({
@@ -117,8 +117,8 @@ const RegisterPage = () => {
                                                   type="text"
                                                   placeholder='Your Name'
                                                   className="border placeholder-gray-400 focus:outline-none focus:border-black w-full pt-4 pr-4 pb-4 pl-4 mr-0 mt-0 ml-0 text-base block bg-white border-gray-300 rounded-md"
-                                                  
-                                            />
+
+                                             />
                                              <input
                                                   onChange={(e) => setFormData({
                                                        ...formData,
@@ -128,7 +128,7 @@ const RegisterPage = () => {
                                                   type="email"
                                                   label="Email address"
                                                   className="border placeholder-gray-400 focus:outline-none focus:border-black w-full pt-4 pr-4 pb-4 pl-4 mr-0 mt-0 ml-0 text-base block bg-white border-gray-300 rounded-md"
-                                            />
+                                             />
 
                                              {/* <!--Password input--> */}
                                              <input
@@ -137,23 +137,23 @@ const RegisterPage = () => {
                                                        password: e.target.value,
                                                   })}
                                                   type="password"
-                                                  label="Password"
+
                                                   placeholder=' your password'
                                                   className="border placeholder-gray-400 focus:outline-none focus:border-black w-full pt-4 pr-4 pb-4 pl-4 mr-0 mt-0 ml-0 text-base block bg-white border-gray-300 rounded-md"
-                                            />
+                                             />
                                              <input
                                                   onChange={(e) => setFormData({
                                                        ...formData,
                                                        confirmPassword: e.target.value,
                                                   })}
                                                   type="password"
-                                                  label="confirm password"
+
                                                   placeholder=' confirm password'
                                                   className="border placeholder-gray-400 focus:outline-none focus:border-black w-full pt-4 pr-4 pb-4 pl-4 mr-0 mt-0 ml-0 text-base block bg-white border-gray-300 rounded-md"
-                                            />
+                                             />
 
                                              <div className=' my-2 py-2'>
-                                                  <select   className="border placeholder-gray-400 focus:outline-none focus:border-black w-full pt-4 pr-4 pb-4 pl-4 mr-0 mt-0 ml-0 text-base block bg-white border-gray-300 rounded-md" onChange={(e) => setFormData({
+                                                  <select className="border placeholder-gray-400 focus:outline-none focus:border-black w-full pt-4 pr-4 pb-4 pl-4 mr-0 mt-0 ml-0 text-base block bg-white border-gray-300 rounded-md" onChange={(e) => setFormData({
                                                        ...formData,
                                                        role: e.target.value,
                                                   })} data-te-select-init>
@@ -172,7 +172,7 @@ const RegisterPage = () => {
                                                                  label="Photo url"
                                                                  className="mb-6"
                                                                  size="lg"
-                                                           />
+                                                            />
                                                        }
                                                   </>}
                                              </div>
@@ -211,8 +211,8 @@ const RegisterPage = () => {
 
                                              {/* <!-- Submit button --> */}
 
-                                             <div  className="w-full">
-                                                  <button
+                                             <div className="w-full">
+                                                  <button 
                                                        type="submit"
                                                        className="inline-block w-full rounded bgColor px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
                                                   >
@@ -228,7 +228,7 @@ const RegisterPage = () => {
                                              </div>
 
                                              {/* <!-- Social login buttons --> */}
-                                             <div  className="w-full">
+                                             <div className="w-full">
                                                   <a
                                                        className="mb-3 flex w-full items-center justify-center rounded bg-primary px-7 pb-2.5 pt-3 text-center text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
                                                        style={{ backgroundColor: "#3b5998" }}
@@ -247,7 +247,7 @@ const RegisterPage = () => {
                                                        <p className=' text-sm md:text-base'>   Continue with Facebook</p>
                                                   </a>
                                              </div>
-                                             <div  className="w-full">
+                                             <div className="w-full">
                                                   <a onClick={handleGoogle}
                                                        className="mb-3 flex w-full items-center justify-center rounded bg-info px-7 pb-2.5 pt-3 text-center text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#54b4d3] transition duration-150 ease-in-out hover:bg-info-600 hover:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] focus:bg-info-600 focus:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] focus:outline-none focus:ring-0 active:bg-info-700 active:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(84,180,211,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)]"
                                                        style={{ backgroundColor: "#55acee" }}
