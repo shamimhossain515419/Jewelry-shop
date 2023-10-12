@@ -1,7 +1,7 @@
-
 import connectToDB from "@/database";
 import Product from "@/models/product";
 import { NextResponse } from "next/server";
+
 
 
 export const dynamic = "farce-dynamic";
@@ -34,7 +34,7 @@ export async function GET(req) {
 
 
      } catch (error) {
-          return NextResponse, json({
+          return NextResponse.json({
                success: false,
                message: " Product delete successfully"
           })

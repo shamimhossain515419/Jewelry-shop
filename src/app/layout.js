@@ -1,4 +1,6 @@
 
+
+import "tw-elements-react/dist/css/tw-elements-react.min.css";
 import Navbar from '@/Share/Navbar/Navbar'
 import './globals.css'
 import { Inter } from 'next/font/google'

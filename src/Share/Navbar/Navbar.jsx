@@ -79,7 +79,7 @@ const Navbar = () => {
                                              {
                                                   user ? <div onClick={() => setOpenModal(true)} className=' cursor-pointer hidden md:block '>
                                                        <div className='   relative flex gap-2 items-center '>
-                                                            <Image width={60} height={60} className=' relative h-10 w-10 rounded-full object-cover' src={user?.photoURL} alt="" />
+                                                            <Image width={60} height={60} className=' relative h-10 w-10 rounded-full object-cover' src={user?.photoURL} alt="image" />
                                                             <div className=' absolute w-3 h-3  left-8 -top-1  bg-[rgb(1,179,31)] rounded-full '></div>
                                                             <div className=' relative  space-y-0'>
                                                                  <h1 className='relative  text-base'>{user?.displayName}</h1>

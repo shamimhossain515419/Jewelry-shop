@@ -1,3 +1,4 @@
+import { getAllAdminProducts } from '@/services/product';
 import React from 'react';
 
 const MyJewelry = async() => {
