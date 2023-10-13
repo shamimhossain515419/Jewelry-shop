@@ -10,9 +10,6 @@ export async function GET(req) {
 
      console.log("shamim");
 
-
-
-
      try {
 
           const { searchParams } = new URL(req.url);
@@ -44,11 +41,11 @@ export async function GET(req) {
      } catch (error) {
           return NextResponse.json({
                success: false,
-               message: "Product delete successfully",
+               message: "Something went wrong ! Please try again later",
           })
      }
 
 
-     
+
 
 }

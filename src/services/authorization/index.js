@@ -1,5 +1,5 @@
 export const JwtToken = async (formData) => {
-     console.log(formData);
+     
      try {
        const res = await fetch("http://localhost:3000/api/token/jwt", {
          method: "POST",

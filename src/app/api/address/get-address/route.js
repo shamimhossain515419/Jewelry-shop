@@ -1,12 +1,7 @@
-
-
 import connectToDB from "@/database";
-import User from "@/models/users/User";
+import Address from "@/models/address/address";
 import { NextResponse } from "next/server";
-
-
-
-export const dynamic = "farce-dynamic";
+export const dynamic = "force-dynamic";
 
 export async function GET(req) {
 
@@ -14,32 +9,22 @@ export async function GET(req) {
           await connectToDB();
           const { searchParams } = new URL(req.url);
           const email = searchParams.get("email");
-          if (!email) {
-               return NextResponse.json({
-                    success: false,
-                    message: "Product ID is required",
-               })
-          }
-          const FindEmail = await User.findOne({ email });
-
-          if (FindEmail) {
+          const data = await Address.find({ email: email })
+          if (data) {
                return NextResponse.json({
                     success: true,
-                    data: FindEmail
+                    data: data
                });
           } else {
                return NextResponse.json({
                     success: false,
-                    message: "Failed  Get product the product ! Please try again",
+                    message: "Address Not Found",
                });
           }
-
-
      } catch (error) {
           return NextResponse.json({
                success: false,
                message: "Something went wrong ! Please try again later",
-          })
+          });
      }
-
 }

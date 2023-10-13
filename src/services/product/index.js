@@ -74,7 +74,7 @@ export const GetUserCart = async (email) => {
     const res = await fetch(`http://localhost:3000/api/userview/get-by-email-cart?email=${email}`, {
       method: "GET",
       cache: "no-store",
-     
+
     });
     const data = res.json();
     return data;
@@ -99,3 +99,19 @@ export const cartDeleteById = async (id) => {
   }
 
 }
+export const GetByCartId = async (id) => {
+  try {
+    const res = await fetch(`http://localhost:3000/api/userview/get-by-id?id=${id}`, {
+      method: "Get",
+      cache: "no-store",
+    });
+    const data = res.json();
+    return data;
+  } catch (e) {
+    console.log(e);
+  }
+
+}
+
+
+

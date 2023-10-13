@@ -4,7 +4,7 @@ import React from 'react';
 
 const DashboardLink = () => {
      const router = usePathname();
- console.log(router);
+
      return (
           <div>
                <div className="  my-5">
@@ -16,7 +16,7 @@ const DashboardLink = () => {
                          <Link className={`${router == "/dashboard/checkout" ? "textColor" : ""} `} href={'/dashboard/checkout'}>    Checkout  </Link>
                     </div>
                     <div className=" max-w-[350px] md:w-[350px] mt-1 ">
-                         <Link className=" " href={'/dashboard/setting'}>   Account setting  </Link>
+                         <Link className=" " href={'/dashboard/account-setting'}>   Account setting  </Link>
                     </div>
                     <div className=" max-w-[350px] md:w-[350px] mt-1 ">
                          <Link className=" " href={'/dashboard/shopping'}>   Billing & Shipping Info   </Link>

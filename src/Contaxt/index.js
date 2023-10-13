@@ -17,13 +17,20 @@ import {
 import { JwtToken } from '@/services/authorization';
 import { GetUser } from '@/services/Register';
 import { GetUserCart } from '@/services/product';
+import { Address_by_id } from '@/services/address';
+
 const GlobalState = ({ children }) => {
      const [openModal, setOpenModal] = useState(false);
      const [loading, setLoading] = useState(true)
      const [user, setUser] = useState(null);
+     const [address, setAddress] = useState([]);
      const [Error, setError] = useState(false)
      const [cartData, setCartData] = useState([])
      const [userinfo, setUserinfo] = useState(null)
+     const [componentLevelLoader, setComponentLevelLoader] = useState({
+          loading: false,
+          id: "",
+     });
      const [pageLoader, setPageLoader] = useState(false)
      const GoogleProvider = new GoogleAuthProvider();
      const createUser = async (email, password) => {
@@ -55,14 +62,16 @@ const GlobalState = ({ children }) => {
           localStorage.setItem("token", data?.message);
      };
      const getCartData = async (email) => {
-          const data = await  GetUserCart(email);
+          const data = await GetUserCart(email);
           console.log(data);
           setCartData(data?.data)
      }
 
      const handleCurrentUser = async (email) => {
           const data = await GetUser(email);
+          const result = await Address_by_id(email)
           setUserinfo(data.data)
+          setAddress(result.data)
 
      }
 
@@ -70,7 +79,7 @@ const GlobalState = ({ children }) => {
           const unsubcript = onAuthStateChanged(auth, currentUser => {
                setUser(currentUser);
                setLoading(false);
-               console.log(currentUser?.email);
+
                if (currentUser?.email) {
                     handleToken(currentUser?.email);
                     handleCurrentUser(currentUser?.email)
@@ -98,7 +107,8 @@ const GlobalState = ({ children }) => {
           Error, setError,
           Login, userinfo,
           getCartData,
-          cartData
+          cartData, address,
+          componentLevelLoader, setComponentLevelLoader
      }
      return (
           <div>

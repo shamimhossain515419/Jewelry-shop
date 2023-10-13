@@ -54,7 +54,7 @@ const AddJewelry = () => {
                }
           })
      }
-     console.log(formData);
+  
      const handleSubmit = async (e) => {
           e.preventDefault();
           const result = await PostAllProduct(formData);

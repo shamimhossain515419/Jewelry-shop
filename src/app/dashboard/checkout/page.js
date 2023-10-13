@@ -1,9 +1,6 @@
 import CheckoutBox from "@/Components/CommonCart/Checkut";
 
 
-
-
-
 const CheckoutPage = async () => {
 
 

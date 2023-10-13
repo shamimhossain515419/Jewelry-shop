@@ -1,43 +1,32 @@
 import connectToDB from "@/database";
-import Product from "@/models/product";
+import Address from "@/models/address/address";
+import { ObjectId } from "mongodb";
 import { NextResponse } from "next/server";
+export const dynamic = "force-dynamic";
 
+export async function DELETE(req) {
 
-
-export const dynamic = "farce-dynamic";
-
-export async function GET(req) {
-
- try {
+     try {
           await connectToDB();
           const { searchParams } = new URL(req.url);
           const id = searchParams.get("id");
-          if (!id) {
-               return NextResponse.json({
-                    success: false,
-                    message: "Product ID is required",
-               })
-          }
-          const deleteProduct = await Product.findById(id);
-
-          if (deleteProduct) {
+           console.log(id);
+          const data = await Address.findByIdAndDelete(id)
+          if (data) {
                return NextResponse.json({
                     success: true,
-                    data: deleteProduct
+                    message: "Successfully DELETE ID",
                });
           } else {
                return NextResponse.json({
                     success: false,
-                    message: "Failed  Get product the product ! Please try again",
+                    message: "Address Not Found",
                });
           }
-
-
      } catch (error) {
           return NextResponse.json({
                success: false,
                message: "Something went wrong ! Please try again later",
-          })
+          });
      }
-
 }
